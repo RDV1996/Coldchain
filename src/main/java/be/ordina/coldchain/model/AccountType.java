@@ -18,10 +18,10 @@ public class AccountType {
 
     private  String naam;
 
-    public AccountType(int version, String naam) {
+    /*public AccountType(int version, String naam) {
         this.version = version;
         this.naam = naam;
-    }
+    }*/
 
     public long getId() {
         return id;

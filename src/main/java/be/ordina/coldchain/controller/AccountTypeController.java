@@ -1,0 +1,40 @@
+/**
+ * Managing account types
+ * Author: Jorne Lambrechts
+ */
+package be.ordina.coldchain.controller;
+
+import be.ordina.coldchain.model.AccountType;
+import be.ordina.coldchain.repository.AccountTypeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.ArrayList;
+
+@RestController
+public class AccountTypeController {
+
+    @Autowired
+    private AccountTypeRepository accountTypeRepository;
+
+    @RequestMapping(value = "/accounttypes", method = RequestMethod.GET)
+    public List<AccountType> getTypes(){
+        List<AccountType> types = new ArrayList<>();
+        accountTypeRepository.findAll().forEach(types::add);
+
+        return types;
+    }
+
+    @RequestMapping(value = "/accounttypes/add", method = RequestMethod.POST)
+    public void addType(@RequestParam(value = "naam") String naam){
+        AccountType type = new AccountType();
+        type.setNaam(naam);
+
+        accountTypeRepository.save(type);
+    }
+
+}
