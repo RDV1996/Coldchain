@@ -1,3 +1,7 @@
+/*
+ Author:Roby de Visser
+*/
+
 package be.ordina.coldchain.model;
 
 import javax.persistence.*;

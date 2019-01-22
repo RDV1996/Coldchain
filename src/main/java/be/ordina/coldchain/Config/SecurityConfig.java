@@ -1,3 +1,7 @@
+/*
+ Author:Roby de Visser
+*/
+
 package be.ordina.coldchain.Config;
 
 import org.springframework.context.annotation.Bean;
