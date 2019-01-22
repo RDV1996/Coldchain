@@ -10,5 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
-    Account getAccountByEmail(String email);
+
+        List<Account> findByEmail(String email);
+        Account getAccountByEmail(String email);
 }
