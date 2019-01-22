@@ -85,14 +85,14 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam(value = "email") String email,
+    public long login(@RequestParam(value = "email") String email,
                         @RequestParam(value = "password") String password){
         Account account = accountRepository.getAccountByEmail(email);
 
         if (passwordEncoder.matches(password, account.getPassport())){
-            return "Succesfull login";
+            return account.getId();
         }else{
-            return "Login failed";
+            return 0;
         }
 
 
