@@ -17,8 +17,9 @@ public class Account {
     private int version;
 
     private String email;
-    private String passport;
+    private String password;
     private String name;
+    private String photoURL;
     private String privateKey;
 
     @ManyToOne
@@ -48,12 +49,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getPassport() {
-        return passport;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassport(String passport) {
-        this.passport = passport;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -79,5 +80,14 @@ public class Account {
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
+
+    public String getPhotoURL() {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
+    }
+
 }
 

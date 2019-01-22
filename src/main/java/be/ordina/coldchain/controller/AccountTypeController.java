@@ -16,12 +16,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 @RestController
+@RequestMapping(value = "/accounttypes")
 public class AccountTypeController {
 
     @Autowired
     private AccountTypeRepository accountTypeRepository;
 
-    @RequestMapping(value = "/accounttypes", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<AccountType> getTypes(){
         List<AccountType> types = new ArrayList<>();
         accountTypeRepository.findAll().forEach(types::add);
@@ -29,7 +30,7 @@ public class AccountTypeController {
         return types;
     }
 
-    @RequestMapping(value = "/accounttypes/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addType(@RequestParam(value = "naam") String naam){
         AccountType type = new AccountType();
         type.setNaam(naam);
@@ -37,12 +38,12 @@ public class AccountTypeController {
         accountTypeRepository.save(type);
     }
 
-    @RequestMapping(value = "/accounttypes/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public void deleteType(@RequestParam(value = "id") long id){
         accountTypeRepository.deleteById(id);
     }
 
-    @RequestMapping(value = "/accounttypes/patch", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/patch", method = RequestMethod.PATCH)
     public void patchTpe(@RequestParam(value = "id") long id,
                          @RequestParam(value = "version") int version,
                          @RequestParam(value = "naam") String naam) {
