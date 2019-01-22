@@ -45,13 +45,19 @@ public class AccountTypeController {
     @RequestMapping(value = "/accounttypes/patch", method = RequestMethod.PATCH)
     public void patchTpe(@RequestParam(value = "id") long id,
                          @RequestParam(value = "version") int version,
-                         @RequestParam(value = "naam") String naam){
+                         @RequestParam(value = "naam") String naam) {
         AccountType type = new AccountType();
         type.setId(id);
         type.setVersion(version);
         type.setNaam(naam);
 
         accountTypeRepository.save(type);
+    }
+
+        public AccountType getAccountTypeById(long id) {
+        AccountType accountType = new AccountType();
+        accountType = accountTypeRepository.findById(id).get();
+        return accountType;
     }
 
 }
