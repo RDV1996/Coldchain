@@ -12,10 +12,7 @@ import be.ordina.coldchain.repository.AccountTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,5 +82,19 @@ public class AccountController {
         Account account = new Account();
         account = accountRepository.findById(id).get();
         return account;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(@RequestParam(value = "email") String email,
+                        @RequestParam(value = "password") String password){
+        Account account = accountRepository.getAccountByEmail(email);
+
+        if (passwordEncoder.matches(password, account.getPassport())){
+            return "Succesfull login";
+        }else{
+            return "Login failed";
+        }
+
+
     }
 }
