@@ -90,7 +90,7 @@ public class AccountController {
         return account;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public long login(@RequestParam(value = "email") String email,
                         @RequestParam(value = "password") String password){
         Account account = accountRepository.getAccountByEmail(email);
