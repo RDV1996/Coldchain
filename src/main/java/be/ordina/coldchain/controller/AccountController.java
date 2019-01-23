@@ -33,13 +33,13 @@ public class AccountController {
             @RequestParam(value = "email") String email,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "name") String name,
-            @RequestParam(value = "accountType") AccountType accountType,
+            @RequestParam(value = "accountTypeId") long accountTypeId,
             @RequestParam(value = "photoURL") String photoURL) {
         Account account = new Account();
         account.setEmail(email);
         account.setPassword(passwordEncoder.encode(password));
         account.setName(name);
-        account.setAccountType(accountType);
+        account.setAccountType(accountTypeController.getAccountTypeById(accountTypeId));
         account.setPhotoURL(photoURL);
 
         accountRepository.save(account);
