@@ -20,7 +20,7 @@ import java.util.List;
 public class AccountController {
 
     @Autowired
-    private  PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -56,15 +56,14 @@ public class AccountController {
             @RequestParam(value = "version") int version,
             @RequestParam(value = "photoURL") String photoURL) {
         String pwCheck = getPassword(id);
-        if(passwordEncoder.matches(confirmPassword, pwCheck)) {
+        if (passwordEncoder.matches(confirmPassword, pwCheck)) {
             Account account = new Account();
             account.setVersion(version);
             account.setId(id);
             account.setEmail(email);
-            if(password.equals("")){
+            if (password.equals("")) {
                 account.setPassword(pwCheck);
-            }
-            else {
+            } else {
                 account.setPassword(passwordEncoder.encode(password));
             }
             account.setName(name);
@@ -76,13 +75,13 @@ public class AccountController {
         }
     }
 
-    private List<Account> getAccounts(){
+    private List<Account> getAccounts() {
         List<Account> accounts = new ArrayList<>();
         accountRepository.findAll().forEach(accounts::add);
         return accounts;
     }
 
-    @RequestMapping(value = "/id/{id}", method= RequestMethod.GET)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public Account getAccountById(@PathVariable("id") long id) {
         Account account = new Account();
         account = accountRepository.findById(id).get();
@@ -92,34 +91,35 @@ public class AccountController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public long login(@RequestParam(value = "email") String email,
-                        @RequestParam(value = "password") String password){
+                      @RequestParam(value = "password") String password) {
         Account account = accountRepository.getAccountByEmail(email);
 
-        if (passwordEncoder.matches(password, account.getPassword())){
+        if (passwordEncoder.matches(password, account.getPassword())) {
             return account.getId();
-        }else{
+        } else {
             return 0;
         }
 
 
     }
 
-    @RequestMapping(value = "/email/{email}", method= RequestMethod.GET)
+    @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
     public List<Account> getAccountsByEmail(
-            @PathVariable(value = "email", required = false) String email){
+            @PathVariable(value = "email", required = false) String email) {
 
         List<Account> accounts = new ArrayList<>();
         accountRepository.findByEmail(email).forEach(accounts::add);
-        for( Account account : accounts){
+        for (Account account : accounts) {
             account.setPassword("");
         }
         return accounts;
     }
 
-    private String getPassword(long id){
+    private String getPassword(long id) {
         Account account = new Account();
         account = accountRepository.findById(id).get();
         return account.getPassword();
     }
+
 
 }
