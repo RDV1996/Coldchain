@@ -15,6 +15,43 @@ import java.util.*;
 
 public class BlockchainDataService {
 
+    public void sendToApi(MultiValueMap<String, String> requestBody, String url){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("PRIVATE-TOKEN", "xyz");
+        headers.add("Accept", MediaType.ALL_VALUE);
+        JSONObject jsonObject = null;
+        try {
+            HttpEntity formEntity = new HttpEntity<>(requestBody, headers);
+
+            //System.out.println(formEntity);
+
+            ResponseEntity<String> responseEntity  = restTemplate.postForEntity(
+                    //"http://localhost:5000/lorainput/nothing",
+                    url,
+                    formEntity, String.class);
+            System.out.println(responseEntity);
+            if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+                try {
+                    jsonObject = new JSONObject(responseEntity.getBody());
+                    System.out.println(jsonObject);
+
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSONException occurred");
+                }
+            }
+        } catch (final HttpClientErrorException httpClientErrorException) {
+            System.out.println(httpClientErrorException);
+
+        } catch (HttpServerErrorException httpServerErrorException) {
+            System.out.println(httpServerErrorException);
+
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
+    }
+
     public void dataGen() {
 
         List<String> bedrijven = new ArrayList<>();
@@ -67,14 +104,6 @@ public class BlockchainDataService {
         int i = 0;
 
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add("PRIVATE-TOKEN", "xyz");
-        headers.add("Accept", MediaType.ALL_VALUE);
-        JSONObject jsonObject = null;
-
-
         for (int z = 0; z < bedrijven.size(); z++) {
             for (int y = 0; y < Math.round(DevEUI.size() / bedrijven.size()); y++) {
                 int ran = rand.nextInt(40 - 30) + 30;
@@ -107,37 +136,8 @@ public class BlockchainDataService {
                     requestBody.add("Lrcid", plaatsen.get(plaats));
                     requestBody.add("time", sdf.format(new Date()));
 
-
                     c.add(Calendar.MINUTE, 15);
-
-                    try {
-                        HttpEntity formEntity = new HttpEntity<>(requestBody, headers);
-
-                        //System.out.println(formEntity);
-
-                        ResponseEntity<String> responseEntity  = restTemplate.postForEntity(
-                                //"http://localhost:5000/lorainput/nothing",
-                                "http://hyperledger.vanhool.net:3000/api/org.ordina.coldchain.perishable.ReadingImport",
-                                        formEntity, String.class);
-                        System.out.println(responseEntity);
-                        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
-                            try {
-                                jsonObject = new JSONObject(responseEntity.getBody());
-                                System.out.println(jsonObject);
-
-                            } catch (JSONException e) {
-                                throw new RuntimeException("JSONException occurred");
-                            }
-                        }
-                    } catch (final HttpClientErrorException httpClientErrorException) {
-                        System.out.println(httpClientErrorException);
-
-                    } catch (HttpServerErrorException httpServerErrorException) {
-                        System.out.println(httpServerErrorException);
-
-                    } catch (Exception exception) {
-                        System.out.println(exception);
-                    }
+                    sendToApi(requestBody, "http://localhost:5000/lorainput");
                 }
                 i++;
             }

@@ -6,7 +6,7 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class logginConfig implements WebMvcConfigurer {
+public class LoggingConfig implements WebMvcConfigurer {
 
     @Bean
     public CommonsRequestLoggingFilter requestLoggingFilter() {
