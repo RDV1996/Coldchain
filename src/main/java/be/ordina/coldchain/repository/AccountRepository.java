@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
 
-        List<Account> findByEmail(String email);
-        Account getAccountByEmail(String email);
+    List<Account> findByEmail(String email);
+
+    Account getAccountByEmail(String email);
 }

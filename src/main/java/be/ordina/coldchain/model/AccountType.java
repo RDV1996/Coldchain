@@ -16,7 +16,7 @@ public class AccountType {
     @Version
     private int version;
 
-    private  String naam;
+    private String naam;
 
     public long getId() {
         return id;

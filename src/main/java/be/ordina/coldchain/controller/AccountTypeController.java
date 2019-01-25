@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/accounttypes")
@@ -23,7 +23,7 @@ public class AccountTypeController {
     private AccountTypeRepository accountTypeRepository;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<AccountType> getTypes(){
+    public List<AccountType> getTypes() {
         List<AccountType> types = new ArrayList<>();
         accountTypeRepository.findAll().forEach(types::add);
 
@@ -31,7 +31,7 @@ public class AccountTypeController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addType(@RequestParam(value = "naam") String naam){
+    public void addType(@RequestParam(value = "naam") String naam) {
         AccountType type = new AccountType();
         type.setNaam(naam);
 
@@ -39,7 +39,7 @@ public class AccountTypeController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public void deleteType(@RequestParam(value = "id") long id){
+    public void deleteType(@RequestParam(value = "id") long id) {
         accountTypeRepository.deleteById(id);
     }
 
@@ -55,7 +55,7 @@ public class AccountTypeController {
         accountTypeRepository.save(type);
     }
 
-        public AccountType getAccountTypeById(long id) {
+    public AccountType getAccountTypeById(long id) {
         AccountType accountType = new AccountType();
         accountType = accountTypeRepository.findById(id).get();
         return accountType;
